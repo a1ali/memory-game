@@ -1,0 +1,37 @@
+{
+  "files": {
+    "main.css": "/memory-game/static/css/main.4f0c7c12.chunk.css",
+    "main.js": "/memory-game/static/js/main.a2751a42.chunk.js",
+    "main.js.map": "/memory-game/static/js/main.a2751a42.chunk.js.map",
+    "runtime-main.js": "/memory-game/static/js/runtime-main.d9a7e991.js",
+    "runtime-main.js.map": "/memory-game/static/js/runtime-main.d9a7e991.js.map",
+    "static/js/2.39e70535.chunk.js": "/memory-game/static/js/2.39e70535.chunk.js",
+    "static/js/2.39e70535.chunk.js.map": "/memory-game/static/js/2.39e70535.chunk.js.map",
+    "index.html": "/memory-game/index.html",
+    "static/css/main.4f0c7c12.chunk.css.map": "/memory-game/static/css/main.4f0c7c12.chunk.css.map",
+    "static/js/2.39e70535.chunk.js.LICENSE.txt": "/memory-game/static/js/2.39e70535.chunk.js.LICENSE.txt",
+    "static/media/index.css": "/memory-game/static/media/blob-scene-haikei.fc8993b6.svg",
+    "static/media/c.0316787c.svg": "/memory-game/static/media/c.0316787c.svg",
+    "static/media/ch.c2e1e9b9.svg": "/memory-game/static/media/ch.c2e1e9b9.svg",
+    "static/media/cpp.bd9fc7e8.svg": "/memory-game/static/media/cpp.bd9fc7e8.svg",
+    "static/media/css.0b24b108.svg": "/memory-game/static/media/css.0b24b108.svg",
+    "static/media/go.40c6002e.svg": "/memory-game/static/media/go.40c6002e.svg",
+    "static/media/haskell.3b6e206d.svg": "/memory-game/static/media/haskell.3b6e206d.svg",
+    "static/media/html.0e2d7499.svg": "/memory-game/static/media/html.0e2d7499.svg",
+    "static/media/java.58ba969b.svg": "/memory-game/static/media/java.58ba969b.svg",
+    "static/media/js.a940676b.svg": "/memory-game/static/media/js.a940676b.svg",
+    "static/media/matlab.52a7ce72.svg": "/memory-game/static/media/matlab.52a7ce72.svg",
+    "static/media/node.8710f73b.svg": "/memory-game/static/media/node.8710f73b.svg",
+    "static/media/php.1be1c09f.svg": "/memory-game/static/media/php.1be1c09f.svg",
+    "static/media/python.65ff7863.svg": "/memory-game/static/media/python.65ff7863.svg",
+    "static/media/react.429a3c6c.svg": "/memory-game/static/media/react.429a3c6c.svg",
+    "static/media/ruby.c4aae4c6.svg": "/memory-game/static/media/ruby.c4aae4c6.svg",
+    "static/media/ts.900d540f.svg": "/memory-game/static/media/ts.900d540f.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.d9a7e991.js",
+    "static/js/2.39e70535.chunk.js",
+    "static/css/main.4f0c7c12.chunk.css",
+    "static/js/main.a2751a42.chunk.js"
+  ]
+}
