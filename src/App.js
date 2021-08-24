@@ -1,5 +1,5 @@
 import Header from "./components/Header";
-import Card from "./components/Card";
+//import Card from "./components/Card";
 import Type from "./components/Type";
 import Game from "./components/Game";
 
