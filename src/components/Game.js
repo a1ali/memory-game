@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Card from "./Card";
+import { v4 as uuidv4 } from "uuid";
 
 import Clang from "./cardIcons/c.svg";
 import ch from "./cardIcons/ch.svg";
@@ -18,56 +19,23 @@ import react from "./cardIcons/react.svg";
 import ruby from "./cardIcons/ruby.svg";
 import ts from "./cardIcons/ts.svg";
 
-// let gameObj = {
-//     1: [
-//         { src: Clang, text: "C" },
-//         { src: java, text: "Java" },
-//         { src: matlab, text: "Matlab" },
-//         { src: cpp, text: "C++" },
-//     ],
-//     2: [
-//         { src: go, text: "Go" },
-//         { src: ch, text: "C#" },
-//         { src: css, text: "CSS" },
-//         { src: html, text: "HTML" },
-//         { src: python, text: "Python" },
-//         { src: php, text: "PHP" },
-//     ],
-//     3: [
-//         { src: css, text: "CSS" },
-//         { src: node, text: "NodeJS" },
-//         { src: ruby, text: "Ruby" },
-//         { src: go, text: "Go" },
-//         { src: html, text: "HTML" },
-//         { src: php, text: "PHP" },
-//         { src: python, text: "Python" },
-//         { src: ch, text: "C#" },
-//     ],
-//     4: [
-//         { src: js, text: "JavaScript" },
-//         { src: ch, text: "C#" },
-//         { src: html, text: "HTML" },
-//         { src: php, text: "PHP" },
-//         { src: python, text: "Python" },
-//         { src: react, text: "React" },
-//         { src: node, text: "NodeJS" },
-//         { src: go, text: "Go" },
-//         { src: ts, text: "TypeScript" },
-//         { src: haskell, text: "Haskell" },
-//         { src: ruby, text: "Ruby" },
-//         { src: css, text: "CSS" },
-//     ],
-// };
+import kotlin from "./cardIcons/kotlin.svg";
+import svelte from "./cardIcons/svelte.svg";
+import vim from "./cardIcons/vim.svg";
+import vue from "./cardIcons/vue.svg";
+
 
 const Game = () => {
-    let [gameObj, setGameObj] = useState({
-        1: [
+    let MAX_LEVEL = 4;
+
+    let [gameObj, setGameObj] = useState([
+        [
             { src: Clang, text: "C" },
             { src: java, text: "Java" },
             { src: matlab, text: "Matlab" },
             { src: cpp, text: "C++" },
         ],
-        2: [
+        [
             { src: go, text: "Go" },
             { src: ch, text: "C#" },
             { src: css, text: "CSS" },
@@ -75,7 +43,7 @@ const Game = () => {
             { src: python, text: "Python" },
             { src: php, text: "PHP" },
         ],
-        3: [
+        [
             { src: css, text: "CSS" },
             { src: node, text: "NodeJS" },
             { src: ruby, text: "Ruby" },
@@ -85,7 +53,7 @@ const Game = () => {
             { src: python, text: "Python" },
             { src: ch, text: "C#" },
         ],
-        4: [
+        [
             { src: js, text: "JavaScript" },
             { src: ch, text: "C#" },
             { src: html, text: "HTML" },
@@ -99,8 +67,27 @@ const Game = () => {
             { src: ruby, text: "Ruby" },
             { src: css, text: "CSS" },
         ],
-    });
-    let [currentLevel, setCurrentLevel] = useState(1);
+        [
+            { src: ch, text: "C#" },
+            { src: vim, text: "Vim" },
+            { src: kotlin, text: "Kotlin" },
+            { src: vue, text: "Vue" },
+            { src: php, text: "PHP" },
+            { src: html, text: "HTML" },
+            { src: node, text: "NodeJS" },
+            { src: go, text: "Go" },
+            { src: ts, text: "TypeScript" },
+            { src: haskell, text: "Haskell" },
+            { src: react, text: "React" },
+            { src: svelte, text: "Svelte" },
+            { src: python, text: "Python" },
+            { src: ruby, text: "Ruby" },
+            { src: css, text: "CSS" },
+            { src: js, text: "JavaScript" },
+
+        ],
+    ]);
+    let [currentLevel, setCurrentLevel] = useState(0);
     let [clickedArr, setClickedArr] = useState([]);
 
     const shuffle = (array) => {
@@ -125,19 +112,67 @@ const Game = () => {
     };
 
     const shuffleGameLevel = () => {
-        
         let levelCopy = [...gameObj[currentLevel]];
         //console.log(levelCopy)
         levelCopy = shuffle(levelCopy);
         //console.log(levelCopy)
-        setGameObj({ ...gameObj, currentLevel: levelCopy });
+        //setGameObj({ ...gameObj, currentLevel: levelCopy });
+        // setGameObj((prevObj) => ({
+        //     ...prevObj,
+        //     currentLevel: levelCopy,
+        // }));
+        let gameObjCopy = [...gameObj];
+        gameObjCopy[currentLevel] = levelCopy;
+        setGameObj(gameObjCopy);
+
+        //console.log(gameObj[currentLevel]);
+    };
+
+    // useEffect(() => {
+    //     let levelCopy = [...gameObj[currentLevel]];
+    //     //console.log(levelCopy)
+    //     levelCopy = shuffle(levelCopy);
+    //     setGameObj((prevObj) => ({
+    //         ...prevObj,
+    //         currentLevel: levelCopy,
+    //     }));
+    // }, [clickedArr]);
+    useEffect(() => {
+        // if (clickedArr.length === gameObj[currentLevel].length) {
+        //     setCurrentLevel(currentLevel + 1);
+        //     resetClickedArr();
+        // }
+        if (clickedArr.length === gameObj[currentLevel].length) {
+            console.log(currentLevel)
+            if (currentLevel !== MAX_LEVEL) {
+                setCurrentLevel(currentLevel + 1);
+                resetClickedArr();
+            }
+            else {
+                resetClickedArr();
+            }
+        }
+    }, [clickedArr]);
+
+    const checkLevelComplete = () => {
+        if (clickedArr.length === gameObj[currentLevel].length) {
+            console.log(currentLevel)
+            if (currentLevel !== 3) {
+                setCurrentLevel(currentLevel + 1);
+                resetClickedArr();
+            }
+            else {
+                resetClickedArr();
+            }
+        }
     };
 
     const handleClick = (text) => {
-        if (!checkRepeat(text)) {
+        if (checkRepeat(text) === false) {
             let arrClone = [...clickedArr];
             arrClone.push(text);
             setClickedArr(arrClone);
+            //checkLevelComplete();
             shuffleGameLevel();
         } else {
             resetGame();
@@ -150,17 +185,21 @@ const Game = () => {
 
     const checkRepeat = (text) => {
         //return true if the card text already exsits in the clickedArr
+        let found = false;
+
         clickedArr.forEach((item) => {
-            console.log(item)
+            //console.log(item);
+            //console.log(item, text)
             if (item === text) {
-                return true;
+                //console.log(true);
+                found = true;
             }
         });
-        return false;
+        return found;
     };
 
     const resetGame = () => {
-        setCurrentLevel(1);
+        setCurrentLevel(0);
         resetClickedArr();
     };
 
@@ -171,6 +210,7 @@ const Game = () => {
                     svgSrc={item.src}
                     svgText={item.text}
                     handleClick={handleClick}
+                    key={uuidv4()}
                 ></Card>
             ))}
         </div>
