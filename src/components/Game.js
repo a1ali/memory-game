@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Card from "./Card";
 import { v4 as uuidv4 } from "uuid";
+import { motion } from "framer-motion"
 
 import Clang from "./cardIcons/c.svg";
 import ch from "./cardIcons/ch.svg";
@@ -113,35 +114,13 @@ const Game = () => {
 
     const shuffleGameLevel = () => {
         let levelCopy = [...gameObj[currentLevel]];
-        //console.log(levelCopy)
         levelCopy = shuffle(levelCopy);
-        //console.log(levelCopy)
-        //setGameObj({ ...gameObj, currentLevel: levelCopy });
-        // setGameObj((prevObj) => ({
-        //     ...prevObj,
-        //     currentLevel: levelCopy,
-        // }));
         let gameObjCopy = [...gameObj];
         gameObjCopy[currentLevel] = levelCopy;
         setGameObj(gameObjCopy);
-
-        //console.log(gameObj[currentLevel]);
     };
 
-    // useEffect(() => {
-    //     let levelCopy = [...gameObj[currentLevel]];
-    //     //console.log(levelCopy)
-    //     levelCopy = shuffle(levelCopy);
-    //     setGameObj((prevObj) => ({
-    //         ...prevObj,
-    //         currentLevel: levelCopy,
-    //     }));
-    // }, [clickedArr]);
     useEffect(() => {
-        // if (clickedArr.length === gameObj[currentLevel].length) {
-        //     setCurrentLevel(currentLevel + 1);
-        //     resetClickedArr();
-        // }
         if (clickedArr.length === gameObj[currentLevel].length) {
             console.log(currentLevel)
             if (currentLevel !== MAX_LEVEL) {
@@ -188,10 +167,7 @@ const Game = () => {
         let found = false;
 
         clickedArr.forEach((item) => {
-            //console.log(item);
-            //console.log(item, text)
             if (item === text) {
-                //console.log(true);
                 found = true;
             }
         });
@@ -204,14 +180,35 @@ const Game = () => {
     };
 
     return (
-        <div className="px-8 py-6 flex justify-center items-center flex-wrap w-full">
-            {gameObj[currentLevel].map((item) => (
-                <Card
-                    svgSrc={item.src}
-                    svgText={item.text}
-                    handleClick={handleClick}
-                    key={uuidv4()}
-                ></Card>
+        <div className="px-8 py-6 flex justify-center items-center flex-wrap w-full overflow-y-auto">
+            {gameObj[currentLevel].map((item, i) => (
+                <motion.div
+                variants = {{
+                    hidden: {
+                        opacity:0,
+                        scale:0,
+                    },
+                    visible: (i) => ({
+                        opacity: 1,
+                        transition: {
+                            delay: i * 0.2,
+                        },
+                        scale:1,
+                    }),
+                }}
+                initial="hidden"
+                animate="visible"
+                key={uuidv4()}
+                custom={i}
+                >
+
+                    <Card
+                        svgSrc={item.src}
+                        svgText={item.text}
+                        handleClick={handleClick}
+                        key={uuidv4()}
+                    ></Card>
+                </motion.div>
             ))}
         </div>
     );
