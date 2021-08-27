@@ -181,6 +181,12 @@ const Game = () => {
 
     return (
         <div className="px-8 py-6 flex justify-center items-center flex-wrap w-full overflow-y-auto">
+            <div className="text-center sm:text-lg md:text-xl lg:text-2xl mb-8 text-green-500 font-mono font-semibold">
+                <span>level:{`${currentLevel + 1}`}</span> 
+            </div>
+
+            <div className="flex justify-center items-center flex-wrap w-full">
+
             {gameObj[currentLevel].map((item, i) => (
                 <motion.div
                 variants = {{
@@ -210,6 +216,7 @@ const Game = () => {
                     ></Card>
                 </motion.div>
             ))}
+            </div>
         </div>
     );
 };
