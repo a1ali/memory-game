@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Card from "./Card";
 import { v4 as uuidv4 } from "uuid";
-import { motion } from "framer-motion"
+import { motion } from "framer-motion";
+import { ScoreContext } from "./ScoreContext";
 
 import Clang from "./cardIcons/c.svg";
 import ch from "./cardIcons/ch.svg";
@@ -25,9 +26,10 @@ import svelte from "./cardIcons/svelte.svg";
 import vim from "./cardIcons/vim.svg";
 import vue from "./cardIcons/vue.svg";
 
-
 const Game = () => {
     let MAX_LEVEL = 4;
+
+    const [score, setScore] = useContext(ScoreContext);
 
     let [gameObj, setGameObj] = useState([
         [
@@ -85,7 +87,6 @@ const Game = () => {
             { src: ruby, text: "Ruby" },
             { src: css, text: "CSS" },
             { src: js, text: "JavaScript" },
-
         ],
     ]);
     let [currentLevel, setCurrentLevel] = useState(0);
@@ -120,41 +121,63 @@ const Game = () => {
         setGameObj(gameObjCopy);
     };
 
+    const increaseScore = () => {
+        let scoreCopy = [...score];
+        scoreCopy[0] = scoreCopy[0] + 1;
+        setScore(scoreCopy);
+    };
+
+    const resetScore = () => {
+        let scoreCopy = [...score];
+        scoreCopy[0] = 0;
+        setScore(scoreCopy);
+    };
+
+    useEffect(() => {
+        if (score[0] > score[1]) {
+            let scoreCopy = [...score];
+            scoreCopy[1] = scoreCopy[0];
+            setScore(scoreCopy);
+        }
+    }, [score]);
+
     useEffect(() => {
         if (clickedArr.length === gameObj[currentLevel].length) {
-            console.log(currentLevel)
+            //console.log(currentLevel)
             if (currentLevel !== MAX_LEVEL) {
                 setCurrentLevel(currentLevel + 1);
                 resetClickedArr();
-            }
-            else {
+            } else {
                 resetClickedArr();
             }
         }
     }, [clickedArr]);
 
-    const checkLevelComplete = () => {
-        if (clickedArr.length === gameObj[currentLevel].length) {
-            console.log(currentLevel)
-            if (currentLevel !== 3) {
-                setCurrentLevel(currentLevel + 1);
-                resetClickedArr();
-            }
-            else {
-                resetClickedArr();
-            }
-        }
-    };
+    // const checkLevelComplete = () => {
+    //     if (clickedArr.length === gameObj[currentLevel].length) {
+    //         console.log(currentLevel)
+    //         if (currentLevel !== 3) {
+    //             setCurrentLevel(currentLevel + 1);
+    //             resetClickedArr();
+    //         }
+    //         else {
+    //             resetClickedArr();
+    //         }
+    //     }
+    // };
 
     const handleClick = (text) => {
         if (checkRepeat(text) === false) {
             let arrClone = [...clickedArr];
             arrClone.push(text);
             setClickedArr(arrClone);
+            increaseScore();
+            //setBestScore();
             //checkLevelComplete();
             shuffleGameLevel();
         } else {
             resetGame();
+            resetScore();
         }
     };
 
@@ -182,40 +205,38 @@ const Game = () => {
     return (
         <div className="px-8 py-6 flex justify-center items-center flex-wrap w-full overflow-y-auto">
             <div className="text-center sm:text-lg md:text-xl lg:text-2xl mb-8 text-green-500 font-mono font-semibold">
-                <span>level:{`${currentLevel + 1}`}</span> 
+                <span>level:{`${currentLevel + 1}`}/5</span>
             </div>
 
             <div className="flex justify-center items-center flex-wrap w-full">
-
-            {gameObj[currentLevel].map((item, i) => (
-                <motion.div
-                variants = {{
-                    hidden: {
-                        opacity:0,
-                        scale:0,
-                    },
-                    visible: (i) => ({
-                        opacity: 1,
-                        transition: {
-                            delay: i * 0.2,
-                        },
-                        scale:1,
-                    }),
-                }}
-                initial="hidden"
-                animate="visible"
-                key={uuidv4()}
-                custom={i}
-                >
-
-                    <Card
-                        svgSrc={item.src}
-                        svgText={item.text}
-                        handleClick={handleClick}
+                {gameObj[currentLevel].map((item, i) => (
+                    <motion.div
+                        variants={{
+                            hidden: {
+                                opacity: 0,
+                                scale: 0,
+                            },
+                            visible: (i) => ({
+                                opacity: 1,
+                                transition: {
+                                    delay: i * 0.15,
+                                },
+                                scale: 1,
+                            }),
+                        }}
+                        initial="hidden"
+                        animate="visible"
                         key={uuidv4()}
-                    ></Card>
-                </motion.div>
-            ))}
+                        custom={i}
+                    >
+                        <Card
+                            svgSrc={item.src}
+                            svgText={item.text}
+                            handleClick={handleClick}
+                            key={uuidv4()}
+                        ></Card>
+                    </motion.div>
+                ))}
             </div>
         </div>
     );
