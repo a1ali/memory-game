@@ -153,27 +153,13 @@ const Game = () => {
         }
     }, [clickedArr]);
 
-    // const checkLevelComplete = () => {
-    //     if (clickedArr.length === gameObj[currentLevel].length) {
-    //         console.log(currentLevel)
-    //         if (currentLevel !== 3) {
-    //             setCurrentLevel(currentLevel + 1);
-    //             resetClickedArr();
-    //         }
-    //         else {
-    //             resetClickedArr();
-    //         }
-    //     }
-    // };
 
     const handleClick = (text) => {
-        if (checkRepeat(text) === false) {
+        if (!checkRepeat(text)) {
             let arrClone = [...clickedArr];
             arrClone.push(text);
             setClickedArr(arrClone);
             increaseScore();
-            //setBestScore();
-            //checkLevelComplete();
             shuffleGameLevel();
         } else {
             resetGame();
@@ -205,7 +191,7 @@ const Game = () => {
     return (
         <div className="px-8 py-6 flex justify-center items-center flex-wrap w-full overflow-y-auto">
             <div className="text-center sm:text-lg md:text-xl lg:text-2xl mb-8 text-green-500 font-mono font-semibold">
-                <span>level:{`${currentLevel + 1}`}/5</span>
+                <span>level:{`${currentLevel + 1}`}/{`${MAX_LEVEL + 1}`}</span>
             </div>
 
             <div className="flex justify-center items-center flex-wrap w-full">
